@@ -1,0 +1,76 @@
+### Criando o projeto
+
+digitar npm create vite@latest
+
+digita o nome do projeto
+
+seleciona react
+
+seleciona typescript
+
+## Modificando o projeto
+
+apaga os arquivos
+app.css / eslintrc.cjs / pasta assets do src
+dentro do index.html nomeia o <title> </title>
+remove o fav icon do index.html
+renomeia App.tsx para app.tsx
+
+apenas deixar as DevDependencies no arquivo package.json
+@types/react
+@types/react-dom
+@vitejs/plugin-react
+typescript
+vite
+
+## Instalando Tailwindcss
+
+npm install -D tailwindcss postcss autoprefixer
+
+npx tailwindcss init -p
+
+e configura do jeito que está na documentação
+
+https://tailwindcss.com/docs/installation
+
+## google fonts
+
+pega a font do google e coloca no index.html referecnaidn ocomo <rel>
+
+
+se quiser em vez de usar duas propriedades em uma unica só durante a tipagem
+basta fazer
+
+antes:
+date: Date
+content:  string
+
+note: {
+  date: Date
+  content: string
+}
+
+a variavel vai ser {props.note.date} / {props.note.content}
+
+se quiser destruturar o props
+props: PropsExample
+
+{ note }: PropsExample
+
+a variavel vai ser {note.date} / {note.content}
+
+dentro do note na classe NoteCard você vai colocar note={
+  {
+  date: new Date(),
+  content: "Hello World"
+}
+}
+para passar um objeto para colocar um codigo javascript no html.
+
+instalar radix ui
+npm install @radix-ui/react-dialog
+[https://www.radix-ui.com/themes/docs/components/dialog]
+
+colocando - na propriedade do tailwindcss no classname é o contrario.
+
+instalar uma lib npm i date-fns

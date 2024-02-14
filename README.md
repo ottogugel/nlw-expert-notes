@@ -1,5 +1,7 @@
 # Tecnologias
 
-Google Fonts
-Tailwindcss
-Vite
+[React]()
+[Google Fonts]()
+[Tailwindcss]()
+[Vite]()
+[Radix UI]()
