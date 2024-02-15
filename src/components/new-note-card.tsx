@@ -1,29 +1,42 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { toast } from 'sonner'
 
-export function NewNoteCard() {
+interface NewNoteCardProps {
+  onNoteCreated: (content: string) => void;
+}
 
-  const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true)
 
-  const [content, setContent] = useState('')
+export function NewNoteCard({ onNoteCreated }: NewNoteCardProps) {
+  const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true);
+
+  const [content, setContent] = useState("");
 
   function handleStartEditor() {
-    setShouldShowOnboarding(false)
+    setShouldShowOnboarding(false);
   }
 
   function handleContentChanged(event: ChangeEvent<HTMLTextAreaElement>) {
-    setContent(event.target.value) // pegar o valor da textarea
+    setContent(event.target.value); // pegar o valor da textarea que é atribuido.
 
-    if(event.target.value === '' ) {
-      setShouldShowOnboarding(true)
+    if (event.target.value === "") {
+      setShouldShowOnboarding(true);
     }
   }
 
   function handleSaveNote(event: FormEvent) {
-    event.preventDefault()
+    event.preventDefault();
 
-    console.log(content)
+    // Caso o usuário não preenche o campo retornará um erro caso contrário retornará sucesso.
+    if (content === "" ) {
+      toast.error("Error");
+    } else {
+      onNoteCreated(content);
+      toast.success("Note created successfully");
+      setContent("")
+      setShouldShowOnboarding(true)
+    }
 
   }
 
@@ -69,6 +82,7 @@ export function NewNoteCard() {
                   autoFocus
                   className="text-sm leading-6 text-slate-400 bg-transparent resize-none flex-1 outline-none"
                   onChange={handleContentChanged}
+                  value={content}
                 />
               )}
             </div>
