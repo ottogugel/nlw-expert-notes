@@ -74,3 +74,5 @@ npm install @radix-ui/react-dialog
 colocando - na propriedade do tailwindcss no classname é o contrario.
 
 instalar uma lib npm i date-fns
+
+parei 52:20

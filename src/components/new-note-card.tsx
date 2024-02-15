@@ -1,13 +1,30 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 export function NewNoteCard() {
 
   const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true)
 
+  const [content, setContent] = useState('')
+
   function handleStartEditor() {
     setShouldShowOnboarding(false)
+  }
+
+  function handleContentChanged(event: ChangeEvent<HTMLTextAreaElement>) {
+    setContent(event.target.value) // pegar o valor da textarea
+
+    if(event.target.value === '' ) {
+      setShouldShowOnboarding(true)
+    }
+  }
+
+  function handleSaveNote(event: FormEvent) {
+    event.preventDefault()
+
+    console.log(content)
+
   }
 
   return (
@@ -26,37 +43,43 @@ export function NewNoteCard() {
             <X className="size-5" />
           </Dialog.Close>
 
-          <div className="flex flex-1 flex-col gap-3 p-5">
-            <span className="text-sm font-medium text-slate-200">Add note</span>
+          <form onSubmit={handleSaveNote} className="flex-1 flex flex-col">
+            <div className="flex flex-1 flex-col gap-3 p-5">
+              <span className="text-sm font-medium text-slate-200">
+                Add note
+              </span>
+              {/* ADICIONAR NOTA POR TEXTO */}
+              {shouldShowOnboarding ? (
+                <p className="text-sm leading-6 text-slate-300">
+                  Start by{" "}
+                  <button className="font-medium text-lime-400 hover:underline">
+                    recording an audio note{" "}
+                  </button>{" "}
+                  or if you prefer{" "}
+                  <button
+                    className="font-medium text-lime-400 hover:underline"
+                    onClick={handleStartEditor}
+                  >
+                    just use text
+                  </button>
+                  .
+                </p>
+              ) : (
+                <textarea
+                  autoFocus
+                  className="text-sm leading-6 text-slate-400 bg-transparent resize-none flex-1 outline-none"
+                  onChange={handleContentChanged}
+                />
+              )}
+            </div>
 
-          {/* ADICIONAR NOTA POR TEXTO */}
-
-            {shouldShowOnboarding ? (
-              <p className="text-sm leading-6 text-slate-300">
-                Start by{" "}
-                <button className="font-medium text-lime-400 hover:underline">
-                  recording an audio note{" "}
-                </button>{" "}
-                or if you prefer{" "}
-                <button
-                  className="font-medium text-lime-400 hover:underline"
-                  onClick={handleStartEditor}
-                >
-                  just use text
-                </button>
-                .
-              </p>
-            ) : (
-              <p>Editor</p>
-            )}
-          </div>
-
-          <button
-            type="button"
-            className="w-full bg-lime-400 hover:bg-lime-500 py-4 text-center text-sm text-lime-950 outline-none font-medium"
-          >
-            Save note
-          </button>
+            <button
+              type="submit"
+              className="w-full bg-lime-400 hover:bg-lime-500 py-4 text-center text-sm text-lime-950 outline-none font-medium"
+            >
+              Save note
+            </button>
+          </form>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
