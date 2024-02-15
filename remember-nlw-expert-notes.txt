@@ -77,3 +77,4 @@ instalar uma lib npm i date-fns
 
 void = vazio
 
+    // JSON = JavaScript Object Notation

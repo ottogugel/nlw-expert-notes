@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import logo from './assets/logo.svg'
 import { NewNoteCard } from './components/new-note-card';
 import { NoteCard } from './components/note-card';
@@ -11,8 +11,16 @@ interface Note {
 
 
 export function App() {
+  const [search, setSearch] = useState('')
+  const [notes, setNotes ] = useState<Note[]>(() => {
+    const notesOnStorage = localStorage.getItem('notes')
 
-  const [notes, setNotes ] = useState<Note[]>([]) // Esse array com objetos do formato Note
+    if(notesOnStorage) {
+      return JSON.parse(notesOnStorage)
+    }
+
+    return []
+  }) // Esse array com objetos do formato Note
 
   function onNoteCreated(content: string) {
     const newNote = {
@@ -21,7 +29,21 @@ export function App() {
       content,
     }
 
-    setNotes([newNote ,...notes]);
+    const notesArray = [newNote ,...notes];
+
+    setNotes(notesArray)
+
+    localStorage.setItem('notes', JSON.stringify(notesArray))
+
+  }
+
+  function handleSearch(event: ChangeEvent<HTMLInputElement>) {
+    const query = event.target.value
+
+    setSearch(query)
+
+    // const filteredNotes = search
+
   }
 
   return (
@@ -33,6 +55,7 @@ export function App() {
           type="text"
           placeholder="Search your notes..."
           className="w-full bg-transparent text-3xl font-semibold tracking-tight outline-none placeholder:text-slate-500"
+          onChange={handleSearch}
         />
       </form>
 
