@@ -70,7 +70,6 @@ export function NewNoteCard({ onNoteCreated }: NewNoteCardProps) {
     }
 
     SpeechRecognition.onerror = (event) => {
-      console.log(event)
     }
 
     SpeechRecognition.start()
