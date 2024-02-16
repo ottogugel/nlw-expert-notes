@@ -7,6 +7,7 @@ interface NewNoteCardProps {
   onNoteCreated: (content: string) => void;
 }
 
+let speechRecognition: SpeechRecognition | null = null // Variavel Global
 
 export function NewNoteCard({ onNoteCreated }: NewNoteCardProps) {
   const [shouldShowOnboarding, setShouldShowOnboarding] = useState(true);
@@ -54,29 +55,35 @@ export function NewNoteCard({ onNoteCreated }: NewNoteCardProps) {
 
     const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition
 
-    const SpeechRecognition = new SpeechRecognitionAPI();
+    speechRecognition = new SpeechRecognitionAPI();
 
-    SpeechRecognition.lang= 'EN' // Lingua que o usuário vai falar
-    SpeechRecognition.continuous = true // Ele não vai parar de gravar até que o usuário pare.
-    SpeechRecognition.maxAlternatives = 1 // Ele vai definir a palavra que o usuário falou em vez de tentar trazer outras alternativas.
-    SpeechRecognition.interimResults = true // Vai trazer o que o usuário vai falando.
+    speechRecognition.lang= 'EN' // Lingua que o usuário vai falar
+    speechRecognition.continuous = true; // Ele não vai parar de gravar até que o usuário pare.
+    speechRecognition.maxAlternatives = 1; // Ele vai definir a palavra que o usuário falou em vez de tentar trazer outras alternativas.
+    speechRecognition.interimResults = true; // Vai trazer o que o usuário vai falando.
 
-    SpeechRecognition.onresult = (event) => {
+    speechRecognition.onresult = (event) => {
       const transcription = Array.from(event.results).reduce((text, result) => {
-        return text.concat(result[0].transcript)
-      },  '') // Converte o iterator
+        return text.concat(result[0].transcript);
+      }, ""); // Converte o iterator
 
-      setContent(transcription)
-    }
+      setContent(transcription);
+    };
 
-    SpeechRecognition.onerror = (event) => {
-    }
+    speechRecognition.onerror = (event) => {
+      console.log(event)
+    };
 
-    SpeechRecognition.start()
+    speechRecognition.start();
   }
+
 
   function handleStopRecording() {
     setIsRecording(false)
+
+    if (speechRecognition !== null) {
+      speechRecognition.stop();
+    }
   }
 
   return (

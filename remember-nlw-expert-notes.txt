@@ -84,3 +84,5 @@ verificar se é compativel com os navegadores e suas determinadas versões https
 || = outro
 
 instalar npm install -D @types/dom-speech-recognition
+
+// responsividade md:px-0 na className
