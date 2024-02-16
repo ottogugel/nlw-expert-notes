@@ -75,6 +75,12 @@ colocando - na propriedade do tailwindcss no classname é o contrario.
 
 instalar uma lib npm i date-fns
 
-void = vazio
+// void = vazio
 
-    // JSON = JavaScript Object Notation
+// JSON = JavaScript Object Notation
+
+verificar se é compativel com os navegadores e suas determinadas versões https://caniuse.com/?search=speechrecognition
+
+|| = outro
+
+instalar npm install -D @types/dom-speech-recognition
