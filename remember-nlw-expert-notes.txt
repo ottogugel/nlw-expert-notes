@@ -86,3 +86,5 @@ verificar se é compativel com os navegadores e suas determinadas versões https
 instalar npm install -D @types/dom-speech-recognition
 
 // responsividade md:px-0 na className
+
+ao passar o parametro da função você está executando, porém o onclick espera uma função, para isso passa uma arrow function

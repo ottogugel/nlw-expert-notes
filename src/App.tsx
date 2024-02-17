@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import logo from "./assets/logo.svg";
 import { NewNoteCard } from "./components/new-note-card";
 import { NoteCard } from "./components/note-card";
+import { toast } from "sonner";
 
 interface Note {
   id: string;
@@ -40,6 +41,17 @@ export function App() {
     setSearch(query);
   }
 
+  function onNoteDeleted(id: string) {
+    const notesArray = notes.filter(note => {
+      return note.id !== id
+    })
+
+    setNotes(notesArray)
+    toast.success("Note successfully deleted");
+
+    localStorage.setItem("notes", JSON.stringify(notesArray));
+  }
+
   const filteredNotes =
     search !== ""
       ? notes.filter((note) =>
@@ -65,7 +77,7 @@ export function App() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[250px]">
         <NewNoteCard onNoteCreated={onNoteCreated} />
         {filteredNotes.map((note) => {
-          return <NoteCard key={note.id} note={note} />;
+          return <NoteCard key={note.id} note={note} onNoteDeleted={onNoteDeleted} />;
         })}
       </div>
     </div>
